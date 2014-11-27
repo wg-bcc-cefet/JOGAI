@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>ACW</title>
+	<h:outputStylesheet name="tema.css" library="css" />
+	<ui:insert name="head"></ui:insert>
+</h:head>
+
+<h:body>
+	<ui:include src="sessionTimeout.xhtml" />
+	<div id="top">
+		<ui:insert name="top">
+			<ui:include src="/header.xhtml" />
+		</ui:insert>
+	</div>
+
+	<ui:insert name="mensagem" />
+	<sec:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+		<p:outputPanel style="float:left;">
+			<ui:insert name="content"></ui:insert>
+		</p:outputPanel>
+	</sec:authorize>
+	<sec:authorize ifAnyGranted="ROLE_ANONYMOUS">
+		<div id="content" class="center_content">
+			<ui:insert name="content"></ui:insert>
+		</div>
+	</sec:authorize>
+
+	<div class="centralizar">
+		<ui:insert name="mensagem2" />
+		<sec:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+			<ui:insert name="content2"></ui:insert>
+		</sec:authorize>
+		<sec:authorize ifAnyGranted="ROLE_ANONYMOUS">
+			<ui:insert name="content2"></ui:insert>
+		</sec:authorize>
+	</div>
+</h:body>
+
+</html>

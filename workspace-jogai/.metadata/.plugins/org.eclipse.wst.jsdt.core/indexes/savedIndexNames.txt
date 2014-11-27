@@ -1,0 +1,7 @@
+INDEX VERSION 1.3+C:\Users\LABPESQUISA\Desktop\eclipse-jee-luna-R-win32-x86_64\workspaces\workspace-jogai\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+890905400.index
+69927912.index
+927074412.index
+1239480702.index
+2010567631.index
+2828498138.index
