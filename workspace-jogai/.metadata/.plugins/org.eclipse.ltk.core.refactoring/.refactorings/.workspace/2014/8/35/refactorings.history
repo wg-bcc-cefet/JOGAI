@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;PrimefacesWebApplication&apos;" deleteContents="false" description="Delete resource &apos;PrimefacesWebApplication&apos;" element1="/PrimefacesWebApplication" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1409275957182"/>&#x0A;<refactoring comment="Delete resource &apos;Copy of PrimefacesWebApplication&apos;" deleteContents="false" description="Delete resource &apos;Copy of PrimefacesWebApplication&apos;" element1="/Copy of PrimefacesWebApplication" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1409276756550"/>
-</session>
