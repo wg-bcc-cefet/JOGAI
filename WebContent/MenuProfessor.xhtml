@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<h:outputStylesheet name="tema.css" library="css" />
+<h:panelGrid class="centralizar" columns="2" cellpadding="5">
+<p:graphicImage url="http://eic.cefet-rj.br/portal/wp-content/uploads/2014/11/header-logo.png" />
+<p:graphicImage url="http://i.imgur.com/r18d5QM.png" />
+</h:panelGrid>
+</h:head>
+<body background="http://i.imgur.com/A2rqm.png">
+<h:body>
+<h:form>  
+  
+    <p:growl id="msgs" showDetail="true" />
+    <p:fieldset legend="Menu do Professor" style="margin-left: auto; margin-right: auto; width: 600px;">
+        <h:panelGrid class="centralizar" columns="5">
+            <p:button value="Instituições" outcome="MenuProfessor.xhtml" />
+        	<p:button value="Participantes" outcome="MenuProfessor.xhtml" />
+            <p:button value="Grupos" outcome="GrupoParticipantes.xhtml" />
+            <p:button value="Jogos" outcome="MenuProfessor.xhtml" />
+            <p:button value="Sair" outcome="index.xhtml" />
+        </h:panelGrid>
+    </p:fieldset> 
+  
+</h:form>
+</h:body>
+</body>
+</html>

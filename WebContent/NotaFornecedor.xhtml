@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Nota Fiscal - Fornecedor - JOGAI</title>
+	<h:outputStylesheet name="copy.css" library="css" />
+	<ui:insert name="head"></ui:insert>
+</h:head>
+<div class='jumbotron jumbotron-maraton jumbotron-home'>
+<div class='container'>
+<div class='margin-top-2x'></div>
+<div class='row'>
+<div class='col-lg-5 col-sm-5'>
+<h2></h2>
+<p class='lead'></p>
+<div class='margin-top-2x'></div>
+</div>
+<div class='col-lg-6 col-lg-offset-1 col-sm-7 featured'>
+<a href="https://professorbarcante.files.wordpress.com/2009/05/foto-2.jpg"><img alt="Jogada JOGAI" class="img-responsive" src="http://i.imgur.com/zTPmhih.jpg" title="Jogada JOGAI" />
+</a>
+</div>
+</div>
+</div>
+</div>
+
+<p:form>
+	<p:panel header="Detalhes do Jogo">
+                <p:messages />
+                <h:panelGrid columns="4" columnClasses="label, value">
+                    <h:outputText value="Vendeu a: " />
+                    <p:selectOneListbox id="cliente" value="#{notaFiscalBean.cliente}">
+			            <f:selectItems value=#{notaFiscalBean.grupos}/>
+       				</p:selectOneListbox>
+                    <h:outputText value="Peça: " />
+                    <p:selectOneListbox id="peca" value="#{notaFiscalBean.pino}">
+			            <f:selectItems value=#{notaFiscalBean.pinos}/>
+			            <p:ajax event="change"
+						update="preco" process="@this" />
+       				</p:selectOneListbox>
+                    <h:outputText value="Quantidade: " />
+                    <p:inputText value="#{notaFiscalBean.qtd}" required="true" label="descr"/>
+                    <h:outputText value="Preço: " />
+                    <p:inputText value="#{notaFiscalBean.precoTotal}" id="preco" required="true" label="descr">
+                    	<f:validateDoubleRange minimum="#{notaFiscalBean.pino.precoMin}" maximum="#{notaFiscalBean.pino.precoMax}" />
+                   	</p:inputText>
+                    <p:commandButton value="Fazer Transação" id="submit" update="growl" actionListener="#{notaFiscalBean.buttonAction}" styleClass="ui-priority-primary" />
+                </h:panelGrid>
+	</p:panel>
+	
+	<p:dataTable id="coms1" var="com" value="#{notaFiscalBean.coms}" editable="true" style="margin-bottom:20px">
+       <p:ajax event="rowEdit" listener="#{notaFiscalBean.onRowEdit}" update=":form:msgs" />
+       <p:ajax event="rowEditCancel" listener="#{notaFiscalBean.onRowCancel}" update=":form:msgs" />
+ 
+       <p:column headerText="Grupo Cliente">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{com.cliente.tipo.nome}" /></f:facet>
+               <f:facet name="input"><p:selectOneListbox id="cliente" value="#{notaFiscalBean.cliente}">
+			            <f:selectItems value=#{notaFiscalBean.grupos}/>
+       				</p:selectOneListbox></f:facet>
+           </p:cellEditor>
+       </p:column>
+ <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!A FAZER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+		<!--  -->
+       <p:column headerText="Peça">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{car.brand}" /></f:facet>
+               <f:facet name="input">
+                   <h:selectOneMenu value="#{car.brand}" style="width:100%">
+                       <f:selectItems value="#{dtEditView.brands}" var="man" itemLabel="#{man}" itemValue="#{man}" />
+                   </h:selectOneMenu>
+               </f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Color">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{car.color}" /></f:facet>
+               <f:facet name="input">
+                   <h:selectOneMenu value="#{car.color}" style="width:100%">
+                       <f:selectItems value="#{dtEditView.colors}" var="color" itemLabel="#{color}" itemValue="#{color}" />
+                   </h:selectOneMenu>
+               </f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+   </p:dataTable>
+	
+</p:form>
+
+
+
+<div class='header-light'>
+<div class='container'>
+
+</div>
+</div>
+<h:outputStylesheet name="tema.css" library="css" />
+<h:panelGrid class="centralizar" columns="3" cellpadding="5">
+<p:graphicImage url="http://eic.cefet-rj.br/portal/wp-content/uploads/2014/11/header-logo.png" />
+<p:graphicImage url="http://i.imgur.com/r18d5QM.png" />
+<p:graphicImage url="http://i.imgur.com/wEglkLc.png" />
+</h:panelGrid>
+</html>

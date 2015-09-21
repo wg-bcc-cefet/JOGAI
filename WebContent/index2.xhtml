@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:sec="http://www.springframework.org/security/tags"> 
+      
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Registro de Instituição - JOGAI</title>
+	<h:outputStylesheet name="copy.css" library="css" />
+	<ui:insert name="head"></ui:insert>
+</h:head>
+<div class='jumbotron jumbotron-maraton jumbotron-home'>
+<div class='container'>
+<div class='margin-top-2x'></div>
+<div class='row'>
+<div class='col-lg-5 col-sm-5'>
+<h2></h2>
+<p class='lead'></p>
+<div class='margin-top-2x'></div>
+</div>
+<div class='col-lg-6 col-lg-offset-1 col-sm-7 featured'>
+<a href="https://professorbarcante.files.wordpress.com/2009/05/foto-2.jpg"><img alt="Jogada JOGAI" class="img-responsive" src="http://i.imgur.com/zTPmhih.jpg" title="Jogada JOGAI" />
+</a>
+</div>
+</div>
+</div>
+</div>
+
+<div class='header-light'>
+<div class='container'>
+<sec:authorize ifAnyGranted="ROLE_INSTITUICAO">
+<div class='row text-center margin-top-3x text-uppercased links-reverse'>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+</div>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+</div>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+<i class='ico-addperson ico--large ico--color-brand-orange'></i>
+<h4 class='margin-top-2x'><a href="/JOGAI/ParticipantesInstituicao.xhtml">Adicionar Participantes</a></h4>
+</div>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+<i class='ico-exit ico--large ico--color-brand-orange'></i>
+<h4 class='margin-top-2x'><a href="#{request.contextPath}/j_spring_security_logout">Sair do Sistema</a></h4>
+</div>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+</div>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+</div>
+</div>
+</sec:authorize>
+<sec:authorize ifAnyGranted="ROLE_PROFESSOR">
+<div class='row text-center margin-top-3x text-uppercased links-reverse'>
+<div class='col-lg-3 col-md-4 col-sm-4'>
+</div>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+<i class='ico-addperson ico--large ico--color-brand-orange'></i>
+<h4 class='margin-top-2x'><a href="/JOGAI/Wizard.xhtml">Criar Jogos</a></h4>
+</div>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+<i class='ico-addperson ico--large ico--color-brand-orange'></i>
+<h4 class='margin-top-2x'><a href="/JOGAI/ParticipantesInstituicao.xhtml">Criar/Manter Grupos</a></h4>
+</div>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+<i class='ico-exit ico--large ico--color-brand-orange'></i>
+<h4 class='margin-top-2x'><a href="#{request.contextPath}/j_spring_security_logout">Sair do Sistema</a></h4>
+</div>
+<div class='col-lg-2 col-md-4 col-sm-4'>
+</div>
+</div>
+</sec:authorize>
+</div>
+</div>
+<h:panelGrid class="centralizar" columns="3" cellpadding="5">
+<p:graphicImage url="http://eic.cefet-rj.br/portal/wp-content/uploads/2014/11/header-logo.png" />
+<p:graphicImage url="http://i.imgur.com/r18d5QM.png" />
+<p:graphicImage url="http://i.imgur.com/wEglkLc.png" />
+</h:panelGrid>
+</html>

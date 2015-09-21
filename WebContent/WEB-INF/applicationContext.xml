@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd 
+		http://www.springframework.org/schema/tx  
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://localhost/JOGAIBD" />
+		<property name="username" value="postgres" />
+		<property name="password" value="post" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="annotatedClasses">
+			<list>
+				<!-- <value>cprm.siagas.model.UsuarioSiagas</value> -->
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+			</value>
+		</property>
+		<!-- <property name="configLocation"> -->
+		<!-- <value>persistence.xml</value> -->
+		<!-- </property> -->
+		<property name="configurationClass">
+			<value>org.hibernate.cfg.AnnotationConfiguration</value>
+		</property>
+	</bean>
+
+	<context:component-scan base-package="br.cefetrj.jogai.dominio" />
+
+	<tx:annotation-driven />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Configurações de autenticação e autorização -->
+
+	<bean id="loggerListener"
+		class="org.springframework.security.authentication.event.LoggerListener" />
+
+	<sec:http auto-config="true" access-denied-page="/menu2.xhtml">
+		<sec:form-login login-page="/login2.xhtml"
+			default-target-url="/index2.xhtml" authentication-failure-url="/login2.xhtml?erro=true" />
+		<sec:logout invalidate-session="true" logout-success-url="/menu2.xhtml" />
+		<sec:intercept-url pattern="*" access="ROLE_USER,ROLE_INSTITUICAO" />
+	</sec:http>
+
+	<bean id="bCryptPasswordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<bean id="usuarioDAO" class="br.cefetrj.jogai.infra.UsuarioDaoJpa"></bean>
+
+	<sec:authentication-manager>
+		<sec:authentication-provider
+			user-service-ref="usuarioDAO">
+			<sec:password-encoder ref="bCryptPasswordEncoder" />
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+
+</beans>

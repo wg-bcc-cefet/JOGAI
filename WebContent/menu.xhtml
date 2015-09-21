@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+<h:form id="menu-principal">
+
+	<p:menubar autoDisplay="true">
+		<sec:authorize ifAnyGranted="ROLE_USER,ROLE_INSTITUICAO">
+			<p:submenu label="Menus">
+				<sec:authorize ifAnyGranted="ROLE_PROFESSOR">
+				<p:menuitem value="Menu do Professor" rendered="true"
+					url="${pageContext.request.contextPath}/MenuProfessor.xhtml" />
+				</sec:authorize>
+				<sec:authorize ifAnyGranted="ROLE_PROFESSOR,ROLE_INSTITUICAO">
+				<p:menuitem value="Menu da Instituição" rendered="true"
+					url="${pageContext.request.contextPath}/MenuInstituicao.xhtml" />
+				</sec:authorize>
+				<sec:authorize ifAnyGranted="ROLE_USER">
+				<p:menuitem value="Menu do Jogador" rendered="true"
+					url="${pageContext.request.contextPath}/#" />
+				</sec:authorize>
+				<p:separator />
+
+				<p:menuitem value="Sair do Sistema"
+					url="${pageContext.request.contextPath}/j_spring_security_logout"></p:menuitem>
+			</p:submenu>
+		</sec:authorize>
+
+		<sec:authorize ifAnyGranted="ROLE_ANONYMOUS">
+			<p:menuitem value="Entrar"
+				url="${pageContext.request.contextPath}/login.xhtml"></p:menuitem>
+		</sec:authorize>
+	</p:menubar>
+</h:form>
+
+</html>

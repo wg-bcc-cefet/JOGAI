@@ -1,0 +1,100 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+ 
+<h:head>
+ 
+ 
+</h:head>
+ 
+<h:body>
+ 
+        <div align="center">
+                <h:form id="formPrincipal">
+ 
+ 
+                        <p:dataTable var="lista" value="#{grupoBean.listaGrupos}"
+                                id="tabelaGrupos" style="width:70%">
+                                <f:facet name="header">Lista de Grupos</f:facet>
+ 
+                                <p:column headerText="ID">
+ 
+                                        <h:outputText value="#{lista.id}" />
+                                </p:column>
+                                <p:column headerText="TipoGrupo">
+ 
+                                        <h:outputText value="#{lista.tipoGrupo.nome}" />
+                                </p:column>
+                                <p:column headerText="Ações">
+                                        <p:commandButton value="Alterar" update=":formAlterar:Alterar"
+                                                oncomplete="PF('dialogAlterar').show()" immediate="true" id="alterar">
+                                                <f:setPropertyActionListener target="#{grupoBean.grupo}"
+                                                        value="#{lista}" />
+                                        </p:commandButton>
+                                        <p:commandButton value="Excluir" update=":formExcluir:Excluir"
+                                                oncomplete="PF('confirmation').show()" immediate="true" id="excluir">
+                                                <f:setPropertyActionListener target="#{grupoBean.grupo}"
+                                                        value="#{lista}" />
+                                        </p:commandButton>
+                                </p:column>
+ 
+                        </p:dataTable>
+ 
+                        <p:commandButton value="Cadastrar" id="cadastrar"
+                                oncomplete="PF('dialogCadastrar').show()" />
+                </h:form>
+        </div>
+        <h:form id="formAlterar">
+                <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
+                        id="Alterar">
+                        <p:panelGrid id="panelAlterar" columns="2" for="tipoGrupo">
+                                <h:outputText value="Tipo do Grupo:" />
+                                <p:selectOneMenu id="tipoGrupo" value="#{grupoBean.grupo.tipoGrupo}" style="width:150px">
+                					<f:selectItem itemLabel="Escolha um" itemValue="" />
+						            <f:selectItem itemLabel="Lavras" itemValue="#{grupoBean.lavras}" />
+						            <f:selectItem itemLabel="Ourives" itemValue="#{grupoBean.ourives}" />
+						            <f:selectItem itemLabel="Joalheria" itemValue="#{grupoBean.joalheria}" />
+            					</p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:commandButton value="Alterar"
+                                actionListener="#{grupoBean.alterar}"
+                                update=":formPrincipal:tabelaGrupos"
+                                oncomplete="PF('dialogAlterar').hide()" />
+                </p:dialog>
+        </h:form>
+ 
+        <h:form id="formCadastrar">
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                        <p:panelGrid id="panelCadastrar" columns="2">
+                                <h:outputText value="Tipo do Grupo:" />
+                                <p:selectOneMenu id="tipoGrupo" value="#{grupoBean.grupo.tipoGrupo}" style="width:150px">
+                					<f:selectItem itemLabel="Escolha um" itemValue="" />
+						            <f:selectItem itemLabel="Lavras" itemValue="#{grupoBean.lavras}" />
+						            <f:selectItem itemLabel="Ourives" itemValue="#{grupoBean.ourives}" />
+						            <f:selectItem itemLabel="Joalheria" itemValue="#{grupoBean.joalheria}" />
+            					</p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:commandButton value="Cadastrar"
+                                actionListener="#{grupoBean.cadastrar}"
+                                update=":formPrincipal:tabelaGrupos"
+                                oncomplete="PF('dialogCadastrar').hide()" />
+                </p:dialog>
+        </h:form>
+        <h:form id="formExcluir">
+                <p:confirmDialog id="Excluir"
+                        message="Você gostaria de Deletar o Grupo?"
+                        header="Excluir" severity="alert" widgetVar="confirmation">
+ 
+                        <p:commandButton id="confirm" value="Sim"
+                                oncomplete="confirmation.hide()"
+                                actionListener="#{grupoBean.excluir}"
+                                update=":formPrincipal:tabelaGrupos" />
+                        <p:commandButton id="decline" value="Não"
+                                onclick="PF('confirmation').hide()" type="button" />
+ 
+                </p:confirmDialog>
+        </h:form>
+ 
+</h:body>
+</html>
