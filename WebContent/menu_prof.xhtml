@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body>
+<h:form>  
+  
+    <p:menubar autoDisplay="true">  
+        <p:submenu label="Projeto" icon="ui-icon ui-icon-document">  
+            <p:submenu label="Novo" icon="ui-icon ui-icon-contact">  
+                <p:menuitem value="Jogo" url="#"/>  
+                <p:menuitem value="Grupo" url="#"/>
+                <p:menuitem value="Participante" url="#"/> 
+            </p:submenu>  
+            <p:submenu label="Editar" icon="ui-icon ui-icon-contact">  
+                <p:menuitem value="Jogo" url="#"/>  
+                <p:menuitem value="Grupo" url="#"/>
+                <p:menuitem value="Participante" url="#"/> 
+            </p:submenu>
+        </p:submenu>  
+  
+        <p:submenu label="Adicionar ou Remover" icon="ui-icon ui-icon-pencil">  
+            <p:submenu label="Adicionar" icon="ui-icon ui-icon-contact">  
+                <p:menuitem value="Grupo em Jogo" url="GrupoParticipantes.xhtml"/>
+                <p:menuitem value="Participante em Grupo" url="adicionar_participantes.xhtml"/> 
+            </p:submenu>
+            <p:submenu label="Remover" icon="ui-icon ui-icon-contact">  
+                <p:menuitem value="Jogo" url="#"/>  
+                <p:menuitem value="Grupo de Jogo" url="#"/>
+                <p:menuitem value="Participante de Grupo" url="#"/> 
+            </p:submenu>   
+        </p:submenu> 
+  
+        <p:submenu label="Ações" icon="ui-icon ui-icon-gear">  
+            <p:submenu label="Rodada" icon="ui-icon ui-icon-refresh">  
+                <p:menuitem value="Iniciar Rodada" url="#"/>  
+                <p:menuitem value="Finalizar Rodada" url="#"/>  
+            </p:submenu>  
+            <p:submenu label="Incentivo e Multas" icon="ui-icon ui-icon-newwin">  
+				<p:menuitem value="Definir Incentivo" url="#"/>  
+                <p:menuitem value="Definir Multas" url="#"/>              
+            </p:submenu>  
+        </p:submenu>  
+        <p:menuitem value="Sair" url="index.xhtml" icon="ui-icon ui-icon-close" />  
+    </p:menubar>  
+  
+</h:form>
+</h:body>
+
+</html>

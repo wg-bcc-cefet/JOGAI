@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Registro de Instituição - JOGAI</title>
+	<h:outputStylesheet name="tema.css" library="css" />
+	<ui:insert name="head"></ui:insert>
+</h:head>
+<h:head>
+<h:panelGrid class="centralizar" columns="2" cellpadding="5">
+<p:graphicImage url="http://eic.cefet-rj.br/portal/wp-content/uploads/2014/11/header-logo.png" />
+<p:graphicImage url="http://i.imgur.com/r18d5QM.png" />
+</h:panelGrid>
+</h:head>
+<body background="http://i.imgur.com/A2rqm.png">
+<h:body> 
+ <h2></h2>
+ <h:form>
+  <p:fieldset legend="Formulário de Registro" widgetVar="regWidget" style="margin-left: auto; margin-right: auto; width: 600px; ">
+   <h:panelGrid class="centralizar" columns="3" width="550" border="0">
+    <h:outputLabel value="Nome de Usuário" />
+    <p:inputText value="#{registroInstituicaoBean.nomeUsuario}" 
+       id="userName"
+        required="true" 
+        requiredMessage="Nome de Usuário é obrigatório"
+        validatorMessage="Nome de Usuário precisa ter entre 5 e 15 caracteres"
+        >
+     <f:validateLength minimum="5" maximum="15" for="userName"></f:validateLength>
+    </p:inputText>
+    <p:message for="userName"/>
+    
+    
+    <h:outputLabel value="Senha" />
+    <p:password value="#{registroInstituicaoBean.senha}"
+       id="password"
+       required="true" 
+       requiredMessage="Senha é obrigatório"
+       validatorMessage="Senha precisa ter entre 5 e 15 caracteres"
+       >
+      <f:validateLength minimum="5" maximum="15" for="password"></f:validateLength>
+    </p:password>
+    <p:message for="password" />
+    
+    <h:outputLabel value="Razão Social" />
+    <p:inputText value="#{registroInstituicaoBean.razaoSocial}"
+       id="razaoSocial"
+       required="true" 
+       requiredMessage="Razão Social é obrigatório(a)"
+       >
+    </p:inputText>
+    <p:message for="razaoSocial" />
+    
+    <h:outputLabel value="CNPJ" />
+    <p:inputText value="#{registroInstituicaoBean.CNPJ}"
+       id="CNPJ"
+       required="true"
+       requiredMessage="CNPJ é obrigatório(a)">
+    </p:inputText>
+    <p:message for="CNPJ" />
+    
+    <h:outputLabel value="Email" />
+    <p:inputText value="#{registroInstituicaoBean.email}"
+       id="email"
+       required="true"
+       requiredMessage = "Email é obrigatório(a)"
+       validatorMessage="Email inválido">
+     <f:validateRegex pattern="[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]{2,3}"></f:validateRegex>   
+    </p:inputText>
+    <p:message for="email" />
+    
+    <p:commandButton value="Registrar" action="#{registroInstituicaoBean.registrar}" ajax="false"></p:commandButton>
+   </h:panelGrid>
+  </p:fieldset>
+ 
+ </h:form>
+</h:body>
+</body> 
+</html>

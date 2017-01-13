@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Registro de Instituição - JOGAI</title>
+	<h:outputStylesheet name="copy.css" library="css" />
+	<ui:insert name="head"></ui:insert>
+</h:head>
+<div class='jumbotron jumbotron-maraton jumbotron-home'>
+<div class='container'>
+<div class='margin-top-2x'></div>
+<div class='row'>
+<div class='col-lg-5 col-sm-5'>
+<h2></h2>
+<p class='lead'></p>
+<div class='margin-top-2x'></div>
+</div>
+<div class='col-lg-6 col-lg-offset-1 col-sm-7 featured'>
+<a href="https://professorbarcante.files.wordpress.com/2009/05/foto-2.jpg"><img alt="Jogada JOGAI" class="img-responsive" src="http://i.imgur.com/zTPmhih.jpg" title="Jogada JOGAI" />
+</a>
+</div>
+</div>
+</div>
+</div>
+
+<div class='header-light'>
+<div class='container'>
+<h:form>
+  <p:fieldset legend="Formulário de Registro" widgetVar="regWidget" style="margin:auto auto; padding:2% ; width: 450px;">
+   <p:panelGrid columns="2" style="margin:auto auto;" width="350" border="0">
+    <p:column>
+    <p:outputLabel value="Nome de Usuário" style="margin:auto auto;"/>
+    </p:column>
+    <p:column>
+    <p:inputText value="#{registroInstituicaoBean.nomeUsuario}" 
+       id="userName"
+        required="true" 
+        requiredMessage="Nome de Usuário é obrigatório"
+        validatorMessage="Nome de Usuário precisa ter entre 5 e 15 caracteres"
+        >
+     <f:validateLength minimum="5" maximum="15" for="userName"></f:validateLength>
+    </p:inputText>
+    <p:message for="userName"/>
+    </p:column>
+    
+    <p:column>
+    <h:outputLabel value="Senha" />
+    </p:column>
+    <p:column>
+    <p:password value="#{registroInstituicaoBean.senha}"
+       id="password"
+       required="true" 
+       requiredMessage="Senha é obrigatório"
+       validatorMessage="Senha precisa ter entre 5 e 15 caracteres"
+       >
+      <f:validateLength minimum="5" maximum="15" for="password"></f:validateLength>
+    </p:password>
+    <p:message for="password" />
+    </p:column>
+    
+    <p:column>
+    <h:outputLabel value="Razão Social" />
+    </p:column>
+    <p:column>
+    <p:inputText value="#{registroInstituicaoBean.razaoSocial}"
+       id="razaoSocial"
+       required="true" 
+       requiredMessage="Razão Social é obrigatório(a)"
+       >
+    </p:inputText>
+    <p:message for="razaoSocial" />
+    </p:column>
+    
+    <p:column>
+    <h:outputLabel value="CNPJ" />
+    </p:column>
+    <p:column>
+    <p:inputText value="#{registroInstituicaoBean.CNPJ}"
+       id="CNPJ"
+       required="true"
+       requiredMessage="CNPJ é obrigatório(a)">
+    </p:inputText>
+    <p:message for="CNPJ" />
+    </p:column>
+    
+    <p:column>
+    <h:outputLabel value="Email" />
+    </p:column>
+    <p:column>
+    <p:inputText value="#{registroInstituicaoBean.email}"
+       id="email"
+       required="true"
+       requiredMessage = "Email é obrigatório(a)"
+       validatorMessage="Email inválido">
+     <f:validateRegex pattern="[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]{2,3}"></f:validateRegex>   
+    </p:inputText>
+    <p:message for="email" />
+    </p:column>
+    
+    <p:commandButton value="Registrar" action="#{registroInstituicaoBean.registrar}" ajax="false"></p:commandButton>
+    
+   </p:panelGrid>
+  </p:fieldset>
+ 
+ </h:form>
+
+</div>
+</div>
+<h:outputStylesheet name="tema.css" library="css" />
+<h:panelGrid class="centralizar" columns="3" cellpadding="5">
+<p:graphicImage url="http://eic.cefet-rj.br/portal/wp-content/uploads/2014/11/header-logo.png" />
+<p:graphicImage url="http://i.imgur.com/r18d5QM.png" />
+<p:graphicImage url="http://i.imgur.com/wEglkLc.png" />
+</h:panelGrid>
+</html>

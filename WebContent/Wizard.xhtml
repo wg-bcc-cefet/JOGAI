@@ -1,0 +1,676 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Registro de Instituição - JOGAI</title>
+	<h:outputStylesheet name="copy.css" library="css" />
+	<ui:insert name="head"></ui:insert>
+</h:head>
+<div class='jumbotron jumbotron-maraton jumbotron-home'>
+<div class='container'>
+<div class='margin-top-2x'></div>
+<div class='row'>
+<div class='col-lg-5 col-sm-5'>
+<h2></h2>
+<p class='lead'></p>
+<div class='margin-top-2x'></div>
+</div>
+<div class='col-lg-6 col-lg-offset-1 col-sm-7 featured'>
+<a href="https://professorbarcante.files.wordpress.com/2009/05/foto-2.jpg"><img alt="Jogada JOGAI" class="img-responsive" src="http://i.imgur.com/zTPmhih.jpg" title="Jogada JOGAI" />
+</a>
+</div>
+</div>
+</div>
+</div>
+
+<div class='header-light'>
+<div class='container'>
+<h:form>
+	<p:fieldset legend="Novo Jogo" widgetVar="regWidget" style="margin:auto auto; padding:2% ; width: 1100px;">
+		<p:wizard flowListener="#{wizardBean.onFlowProcess}">
+			<p:tab id="des" title="Descrição">
+            <p:panel header="Detalhes do Jogo">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Nome ou Descrição do Jogo: " />
+                    <p:inputText value="#{wizardBean.jogoNovo.descricao}" required="true" label="descr"/>
+                </h:panelGrid>
+            </p:panel>
+        	</p:tab>
+        	<p:tab id="ins" title="Instituição">
+            <p:panel header="Instituição Sede">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Instituição Sede do Jogo: " />
+                    <p:selectOneMenu id="tipoGrupo"
+										value="#{wizardBean.idIe}" filter="true"
+										filterMatchMode="startsWith"
+										style="min-width:200px;">
+						<f:selectItems value="#{wizardBean.instituicoes}" />
+					</p:selectOneMenu>
+                </h:panelGrid>
+            </p:panel>
+        	</p:tab>
+        	<p:tab id="grp" title="Grupos">
+            <p:panel header="Grupos participantes">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Número de Grupos Fornecedores: " />
+                    <p:inputText value="#{wizardBean.numForn}" required="true" label="descr"/>
+                    <h:outputText value="Número de Grupos Fabricantes: " />
+                    <p:inputText value="#{wizardBean.numFabr}" required="true" label="descr"/>
+                    <h:outputText value="Número de Grupos Varejistas: " />
+                    <p:inputText value="#{wizardBean.numVare}" required="true" label="descr"/>
+                </h:panelGrid>
+            </p:panel>
+        	</p:tab>
+        	<p:tab id="parForn" title="Participantes - Fornecedores">
+            <p:panel header="Participantes dos grupos fornecedores">
+                <p:messages />
+                <p:tabView dynamic="true" cache="false">  
+				    <p:tab title="Grupo Fornecedor 1" rendered="${wizardBean.numForn >= 1}">
+					    <p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantes1" var="participante" value="#{wizardBean.participantes}" lazy="false">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSel1" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropArea1">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSel1}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSel1}"   
+					                    rendered="#{not empty wizardBean.partSel1}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>
+					    </p:fieldset>
+			            <p:droppable for="partSel1" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantes1"  
+					                dropListener="#{wizardBean.onParticipanteDrop1}"  
+					                onDropUpdate="dropArea1 participantes1">
+					    <p:ajax listener="#{wizardBean.onParticipanteDrop1}" update="dropArea1 participantes1" />
+					    </p:droppable>
+			            
+				    </p:tab>  
+				  
+				    <p:tab title="Grupo Fornecedor 2" rendered="${wizardBean.numForn >= 2}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantes2" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSel2" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropArea2">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSel2}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSel2}"   
+					                    rendered="#{not empty wizardBean.partSel2}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSel2" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantes2"  
+					                dropListener="#{wizardBean.onParticipanteDrop2}"  
+					                onDropUpdate="dropArea2 participantes2">
+					    <p:ajax listener="#{wizardBean.onParticipanteDrop2}" update="dropArea2 participantes2" />
+					    </p:droppable>   
+				    </p:tab>  
+				  
+				    <p:tab title="Grupo Fornecedor 3" rendered="${wizardBean.numForn >= 3}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantes3" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSel3" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropArea3">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSel3}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSel3}"   
+					                    rendered="#{not empty wizardBean.partSel3}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSel3" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantes3"  
+					                dropListener="#{wizardBean.onParticipanteDrop3}"  
+					                onDropUpdate="dropArea3 participantes3">
+					    <p:ajax listener="#{wizardBean.onParticipanteDrop3}" update="dropArea3 participantes3" />
+					    </p:droppable> 
+				    </p:tab>
+				    
+				    <p:tab title="Grupo Fornecedor 4" rendered="${wizardBean.numForn >= 4}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantes4" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSel4" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropArea4">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSel4}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSel4}"   
+					                    rendered="#{not empty wizardBean.partSel4}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSel4" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantes4"  
+					                dropListener="#{wizardBean.onParticipanteDrop4}"  
+					                onDropUpdate="dropArea4 participantes4">
+					    <p:ajax listener="#{wizardBean.onParticipanteDrop4}" update="dropArea4 participantes4" />
+					    </p:droppable> 
+				    </p:tab>
+				    
+				    <p:tab title="Grupo Fornecedor 5" rendered="${wizardBean.numForn > 4}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantes5" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSel5" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropArea5">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSel5}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSel5}"   
+					                    rendered="#{not empty wizardBean.partSel5}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSel5" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantes5"  
+					                dropListener="#{wizardBean.onParticipanteDrop5}"  
+					                onDropUpdate="dropArea5 participantes5">
+					    <p:ajax listener="#{wizardBean.onParticipanteDrop5}" update="dropArea5 participantes5" />
+					    </p:droppable> 
+				    </p:tab> 		  
+			</p:tabView>
+            </p:panel>
+        	</p:tab>
+        	<p:tab id="parFabr" title="Participantes - Fabricantes">
+            <p:panel header="Participantes dos grupos fabricantes">
+                <p:messages />
+                <p:tabView dynamic="true" cache="false">  
+				    <p:tab title="Grupo Fabricante K" rendered="${wizardBean.numFabr >= 1}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesK" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelK" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaK">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelK}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelK}"   
+					                    rendered="#{not empty wizardBean.partSelK}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelK" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesK"  
+					                dropListener="#{wizardBean.onParticipanteDropK}"  
+					                onDropUpdate="dropAreaK participantesK">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropK}" update="dropAreaK participantesK" />
+					    </p:droppable>   
+				    </p:tab>  
+				  
+				    <p:tab title="Grupo Fabricante X" rendered="${wizardBean.numFabr >= 2}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesX" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelX" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaX">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelX}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelX}"   
+					                    rendered="#{not empty wizardBean.partSelX}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelX" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesX"  
+					                dropListener="#{wizardBean.onParticipanteDropX}"  
+					                onDropUpdate="dropAreaX participantesX">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropX}" update="dropAreaX participantesX" />
+					    </p:droppable>   
+				    </p:tab>  
+				  
+				    <p:tab title="Grupo Fabricante Y" rendered="${wizardBean.numFabr >= 3}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesY" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelY" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaY">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelY}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelY}"   
+					                    rendered="#{not empty wizardBean.partSelY}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelY" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesY"  
+					                dropListener="#{wizardBean.onParticipanteDropY}"  
+					                onDropUpdate="dropAreaY participantesY">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropY}" update="dropAreaY participantesY" />
+					    </p:droppable> 
+				    </p:tab>
+				    
+				    <p:tab title="Grupo Fabricante Z" rendered="${wizardBean.numFabr >= 4}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesZ" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelZ" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaZ">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelZ}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelZ}"   
+					                    rendered="#{not empty wizardBean.partSelZ}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelZ" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesZ"  
+					                dropListener="#{wizardBean.onParticipanteDropZ}"  
+					                onDropUpdate="dropAreaZ participantesZ">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropZ}" update="dropAreaZ participantesZ" />
+					    </p:droppable> 
+				    </p:tab>
+				    
+				    <p:tab title="Grupo Fabricante W" rendered="${wizardBean.numFabr > 4}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesW" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelW" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaW">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelW}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelW}"   
+					                    rendered="#{not empty wizardBean.partSelW}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelW" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesW"  
+					                dropListener="#{wizardBean.onParticipanteDropW}"  
+					                onDropUpdate="dropAreaW participantesW">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropW}" update="dropAreaW participantesW" />
+					    </p:droppable> 
+				    </p:tab> 		  
+			</p:tabView>
+            </p:panel>
+        	</p:tab>
+        	<p:tab id="parVare" title="Participantes - Varejistas">
+            <p:panel header="Participantes dos grupos varejistas">
+                <p:messages />
+                <p:tabView dynamic="true" cache="false">  
+				    <p:tab title="Grupo Varejista A" rendered="${wizardBean.numVare >= 1}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesA" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelA" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaA">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelA}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelA}"   
+					                    rendered="#{not empty wizardBean.partSelA}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelA" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesA"  
+					                dropListener="#{wizardBean.onParticipanteDropA}"  
+					                onDropUpdate="dropAreaA participantesA">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropA}" update="dropAreaA participantesA" />
+					    </p:droppable>   
+				    </p:tab>  
+				  
+				    <p:tab title="Grupo Varejista B" rendered="${wizardBean.numVare >= 2}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesB" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelB" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaB">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelB}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelB}"   
+					                    rendered="#{not empty wizardBean.partSelB}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelB" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesB"  
+					                dropListener="#{wizardBean.onParticipanteDropB}"  
+					                onDropUpdate="dropAreaB participantesB">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropB}" update="dropAreaB participantesB" />
+					    </p:droppable>
+				    </p:tab>  
+				  
+				    <p:tab title="Grupo Varejista C" rendered="${wizardBean.numVare >= 3}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesC" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelC" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaC">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelC}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelC}"   
+					                    rendered="#{not empty wizardBean.partSelC}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelC" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesC"  
+					                dropListener="#{wizardBean.onParticipanteDropC}"  
+					                onDropUpdate="dropAreaC participantesC">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropC}" update="dropAreaC participantesC" />
+					    </p:droppable> 
+				    </p:tab>
+				    
+				    <p:tab title="Grupo Varejista D" rendered="${wizardBean.numVare >= 4}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesD" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelD" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaD">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelD}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelD}"   
+					                    rendered="#{not empty wizardBean.partSelD}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelD" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesD"  
+					                dropListener="#{wizardBean.onParticipanteDropD}"  
+					                onDropUpdate="dropAreaD participantesD">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropD}" update="dropAreaD participantesD" />
+					    </p:droppable> 
+				    </p:tab>
+				    
+				    <p:tab title="Grupo Varejista E" rendered="${wizardBean.numVare > 4}">
+				    	<p:fieldset legend="Alocados">  
+					        <p:dataTable id="participantesE" var="participante" value="#{wizardBean.participantes}">  
+					            <p:column style="width:24px">  
+					                <h:outputText id="dragIcon"  
+					                    styleClass="ui-icon ui-icon-arrow-4" />  
+					                <p:draggable for="dragIcon" revert="true" />  
+					            </p:column>  
+					  
+					            <p:column headerText="Nome">  
+					                <h:outputText value="#{participante.nome}" />  
+					            </p:column> 
+					        </p:dataTable>  
+					    </p:fieldset>
+					    
+					    <p:fieldset id="partSelE" legend="Selecionados" style="margin-top:20px">  
+					        <p:outputPanel id="dropAreaE">  
+					            <h:outputText value="Arraste Aqui!"  
+					                    rendered="#{empty wizardBean.partSelE}"  
+					                    style="font-size:24px;" />  
+					  
+					            <p:dataTable var="participante" value="#{wizardBean.partSelE}"   
+					                    rendered="#{not empty wizardBean.partSelE}">  
+					  
+					                <p:column headerText="Nome">  
+					                    <h:outputText value="#{participante.nome}" />  
+					                </p:column>  
+					            </p:dataTable>  
+					        </p:outputPanel>  
+					    </p:fieldset>
+					    <p:droppable for="partSelE" tolerance="touch"  
+					                activeStyleClass="ui-state-highlight" datasource="participantesE"  
+					                dropListener="#{wizardBean.onParticipanteDropE}"  
+					                onDropUpdate="dropAreaE participantesE">
+					    <p:ajax listener="#{wizardBean.onParticipanteDropE}" update="dropAreaE participantesE" />
+					    </p:droppable> 
+				    </p:tab>
+	     		  	<p:tab>
+	     		  		<p:commandButton actionListener = "#{wizardBean.concluir}" ajax="false" />
+	     		  	</p:tab>
+			</p:tabView>
+            </p:panel>
+        	</p:tab>
+		</p:wizard>
+	</p:fieldset>
+</h:form>
+</div>
+</div>
+
+<h:outputStylesheet name="tema.css" library="css" />
+<h:panelGrid class="centralizar" columns="3" cellpadding="5">
+<p:graphicImage url="http://eic.cefet-rj.br/portal/wp-content/uploads/2014/11/header-logo.png" />
+<p:graphicImage url="http://i.imgur.com/r18d5QM.png" />
+<p:graphicImage url="http://i.imgur.com/wEglkLc.png" />
+</h:panelGrid>
+</html>

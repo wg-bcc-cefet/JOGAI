@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Log-in JOGAI</title>
+	<h:outputStylesheet name="tema.css" library="css" />
+	<h:panelGrid class="centralizar" columns="2" cellpadding="5">
+	<p:graphicImage url="http://eic.cefet-rj.br/portal/wp-content/uploads/2014/11/header-logo.png" />
+	<p:graphicImage url="http://i.imgur.com/r18d5QM.png" />
+	</h:panelGrid>
+</h:head>
+<body background="http://i.imgur.com/A2rqm.png">
+<h:body>
+
+	<h:form id="formLogin" prependId="false">
+		<p:growl id="messages" shoSummary="true" showDetail="false"
+			life="3000" />
+
+		<p:dialog id="dialog" header="Login" visible="true"
+			widgetVar="dlg" closable="false" resizable="false">
+
+			<p:ajax event="close" oncomplete="window.location = 'index.xhtml'" />
+
+			<br />
+			<h:outputText
+				value="Por favor, faça login para ter acesso às funcionalidades."
+				rendered="#{param.erroLogin}" style="color: darkred" />
+			<br />
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="j_username" value="Usuário:" />
+				<p:inputText id="j_username" required="true"
+					requiredMessage="Você deve fornecer o nome do usuário."
+					value="#{userLoginBean.username}" />
+
+				<h:outputLabel for="j_password" value="Senha:" />
+				<h:inputSecret id="j_password" required="true"
+					requiredMessage="Você deve fornecer a senha."
+					value="#{userLoginBean.password}" />
+
+				<f:facet name="footer">
+					<h:commandButton type="submit" id="login" value="Entrar"
+						update="messages" action="#{userLoginBean.login}" />
+				</f:facet>
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</h:body>
+</body>
+</html>
